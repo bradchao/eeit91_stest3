@@ -12,9 +12,13 @@ public class Member {
 	
 	public Member() {}
 	public Member(String account, String passwd, String realname) {
+		this(account,passwd,realname, null);
+	}
+	public Member(String account, String passwd, String realname, byte[] icon) {
 		this.account = account;
 		this.passwd = passwd;
 		this.realname = realname;
+		this.icon = icon;
 	}
 	
 	

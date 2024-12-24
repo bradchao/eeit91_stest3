@@ -22,10 +22,12 @@ public class MemberServiceImp implements MemberService{
 	@Override
 	public Member register(Member member, MultipartFile icon) {
 		member.setPasswd(BCrypt.hashpw(member.getPasswd(), BCrypt.gensalt()));
-		try {
-			member.setIcon(icon.isEmpty()?null:icon.getBytes());
-		}catch(Exception e) {
-			member.setIcon(null);
+		if (icon != null) {
+			try {
+				member.setIcon(icon.isEmpty()?null:icon.getBytes());
+			}catch(Exception e) {
+				member.setIcon(null);
+			}
 		}
 		
 		return memberDao.add(member);
