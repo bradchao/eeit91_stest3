@@ -1,8 +1,10 @@
 package tw.brad.stest3.controller;
 
+import java.net.URI;
 import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.HttpSession;
 import tw.brad.stest3.model.Member;
 import tw.brad.stest3.model.Member2;
 import tw.brad.stest3.model.MemberResponse;
@@ -39,25 +42,33 @@ public class MemberController {
 	}
 	
 	@PostMapping(value="/register")
-	public ResponseEntity<MemberResponse> register(@RequestParam String account, 
-													@RequestParam String passwd, 
-													@RequestParam String realname,
-													MultipartFile icon) {
+	public ResponseEntity<Void> register(HttpSession session, 
+										@RequestParam String account, 
+										@RequestParam String passwd, 
+										@RequestParam String realname,
+										MultipartFile icon) {
 		
 		Member member = new Member(account,passwd,realname);
 		Member newMember = memberService.register(member, icon);
 		if (newMember.getId() != -1) {
 			memberResponse.setErrCode(1);
 			memberResponse.setMember(newMember);
+			
+			session.setAttribute("member", newMember);
+			
 		}else {
 			memberResponse.setErrCode(-1);
 			memberResponse.setMember(member);
 		}
-		return ResponseEntity.status(HttpStatus.OK).body(memberResponse);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(URI.create("/brad03.html"));
+		
+		return new ResponseEntity<>(headers, HttpStatus.FOUND);
 	}
 	
 	@PostMapping("/register2")
-	public ResponseEntity<MemberResponse> register2(@RequestBody Member2 member2) {
+	public ResponseEntity<MemberResponse> register2(@RequestBody Member2 member2, HttpSession session) {
 		String base64 =  member2.getIconString().split(",")[1];
 		byte[] iconBytes = Base64.getDecoder().decode(base64);
 		
@@ -67,6 +78,7 @@ public class MemberController {
 		if (newMember.getId() != -1) {
 			memberResponse.setErrCode(1);
 			memberResponse.setMember(newMember);
+			session.setAttribute("member", newMember);
 		}else {
 			memberResponse.setErrCode(-1);
 			memberResponse.setMember(member);
@@ -74,5 +86,10 @@ public class MemberController {
 		return ResponseEntity.status(HttpStatus.OK).body(memberResponse);		
 		
 	}
+	
+	@PostMapping("/logout")
+	public void logout(HttpSession session) {
+		session.invalidate();
+	}	
 	
 }

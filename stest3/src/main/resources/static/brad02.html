@@ -32,16 +32,18 @@ window.onload = function(){
 		
 		console.log(JSON.stringify(jsonData));
 
-		await fetch("/member/register2", {
+		let response = await fetch("/member/register2", {
 			method: "POST",
 			headers: {"Content-type":"application/json"},
 			body: JSON.stringify(jsonData)
 		});
 		
+		
+		
 	});
 }
 </script>
-<form id="form">
+<form id="form" >
 	<input id="account" name="account"/><br />
 	<input type="password" id="passwd" name="passwd"/><br />
 	<input id="realname" name="realname" /><br />
