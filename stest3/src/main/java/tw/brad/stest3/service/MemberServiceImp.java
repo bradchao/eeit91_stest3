@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import tw.brad.stest3.dao.MemberDao;
 import tw.brad.stest3.model.Member;
+import tw.brad.stest3.util.BCrypt;
 
 @Component
 public class MemberServiceImp implements MemberService{
@@ -19,6 +20,7 @@ public class MemberServiceImp implements MemberService{
 
 	@Override
 	public Member register(Member member) {
+		member.setPasswd(BCrypt.hashpw(member.getPasswd(), BCrypt.gensalt()));
 		return memberDao.add(member);
 	}
 

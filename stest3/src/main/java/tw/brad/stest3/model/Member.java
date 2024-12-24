@@ -4,11 +4,20 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Member {
-	private int id;
+	private int id;	// 0
 	private String account;
 	private String passwd;
 	private String realname;
 	private byte[] icon;
+	
+	public Member() {}
+	public Member(String account, String passwd, String realname) {
+		this.account = account;
+		this.passwd = passwd;
+		this.realname = realname;
+	}
+	
+	
 	public int getId() {
 		return id;
 	}

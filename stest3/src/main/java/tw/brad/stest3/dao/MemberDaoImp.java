@@ -8,7 +8,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import tw.brad.stest3.model.Member;
@@ -24,8 +27,24 @@ public class MemberDaoImp implements MemberDao {
 	
 	@Override
 	public Member add(Member member) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "INSERT INTO member (account,passwd,realname,icon)" + 
+					" VALUES (:account,:passwd,:realname,:icon)";
+		Map<String,Object> params = new HashMap<>();
+		params.put("account", member.getAccount());
+		params.put("passwd", member.getPasswd());
+		params.put("realname", member.getRealname());
+		params.put("icon", member.getIcon());
+
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		int n = namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource(params), keyHolder);
+		if (n > 0) {
+			int id = keyHolder.getKey().intValue();
+			member.setId(id);
+			return member;
+		}else {
+			member.setId(-1);
+			return member;
+		}
 	}
 
 	@Override
@@ -61,7 +80,7 @@ public class MemberDaoImp implements MemberDao {
 		});
 		
 		
-		return null;
+		return list.size() > 0 ? list.get(0) : null;
 	}
 
 	@Override
