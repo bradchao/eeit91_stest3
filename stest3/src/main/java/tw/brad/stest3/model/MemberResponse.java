@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MemberResponse {
-	private int errCode;	// -1: not found; 0:nothing;  1: found
+	private int errCode;	// -1: not found/failure; 0:nothing;  1: found/success
 	private Member member;
 	
 	public int getErrCode() {

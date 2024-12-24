@@ -35,20 +35,21 @@ public class MemberController {
 	}
 	
 	@PostMapping("/register")
-	public void register(@RequestParam String account, 
-			@RequestParam String passwd, 
-			@RequestParam String realname,
-			MultipartFile icon) {
+	public ResponseEntity<MemberResponse> register(@RequestParam String account, 
+													@RequestParam String passwd, 
+													@RequestParam String realname,
+													MultipartFile icon) {
 		
 		Member member = new Member(account,passwd,realname);
-		try {
-			member.setIcon(icon.isEmpty()?null:icon.getBytes());
-		}catch(Exception e) {
-			member.setIcon(null);
+		Member newMember = memberService.register(member, icon);
+		if (newMember.getId() != -1) {
+			memberResponse.setErrCode(1);
+			memberResponse.setMember(newMember);
+		}else {
+			memberResponse.setErrCode(-1);
+			memberResponse.setMember(member);
 		}
-		
-		memberService.register(member);
-		
+		return ResponseEntity.status(HttpStatus.OK).body(memberResponse);
 	}
 	
 	
