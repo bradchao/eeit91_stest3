@@ -1,5 +1,7 @@
 package tw.brad.stest3.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Member2 {
 	private String account;
 	private String passwd;

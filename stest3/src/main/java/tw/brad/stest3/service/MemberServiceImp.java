@@ -38,4 +38,16 @@ public class MemberServiceImp implements MemberService{
 		return memberDao.update(member);
 	}
 
+	@Override
+	public Member login(Member loginMember) {
+		Member member = memberDao.getByAccount(loginMember.getAccount());
+		if (member != null) {
+			if (!BCrypt.checkpw(loginMember.getPasswd(), member.getPasswd())) {
+				member = null;
+			}
+		}
+		
+		return member;
+	}
+
 }

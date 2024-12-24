@@ -92,4 +92,19 @@ public class MemberController {
 		session.invalidate();
 	}	
 	
+	@PostMapping("/login")
+	public ResponseEntity<MemberResponse> login(@RequestBody Member loginMember, HttpSession session) {
+		 Member member = memberService.login(loginMember);
+		 if (member != null) {
+			memberResponse.setErrCode(1);
+			memberResponse.setMember(member);			 
+			session.setAttribute("member", member);
+		 }else {
+			memberResponse.setErrCode(-1);
+			memberResponse.setMember(loginMember);
+			session.setAttribute("member", null);
+		 }
+		 return ResponseEntity.status(HttpStatus.OK).body(memberResponse);
+	}
+	
 }
