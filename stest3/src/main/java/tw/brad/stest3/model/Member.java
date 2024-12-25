@@ -2,8 +2,16 @@ package tw.brad.stest3.model;
 
 import org.springframework.stereotype.Component;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 @Component
 public class Member {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;	// 0
 	private String account;
 	private String passwd;
