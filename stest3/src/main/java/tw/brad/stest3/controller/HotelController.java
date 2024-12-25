@@ -3,6 +3,12 @@ package tw.brad.stest3.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -87,4 +93,18 @@ public class HotelController {
 		}
 	}	
 
+	@GetMapping("/test9/{nums}/{page}/{isAsc}")
+	public Page<Hotel> test9(@PathVariable Integer page,
+				@PathVariable Integer nums, @PathVariable Boolean isAsc) {
+		String sortBy = "addr";
+		Sort sortAsc = Sort.by(sortBy).ascending();
+		Sort sortDesc = Sort.by(sortBy).descending();
+		
+		Pageable pagable = PageRequest.of(page-1, nums, isAsc?sortAsc:sortDesc);
+		Page<Hotel> hotels = hotelRepository.findAll(pagable);
+		
+		return hotels;
+	}	
+
+	
 }

@@ -14,7 +14,8 @@ public class Orders {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long orderID;
 	
-	private String orderdate;
+	@Column(name = "orderdate")
+	private String OrderDate;
 	
 	public Long getOrderID() {
 		return orderID;
@@ -24,13 +25,21 @@ public class Orders {
 	}
 
 	
-	
-	public String getOrderdate() {
-		return orderdate;
+
+
+
+
+
+	public String getOrderDate() {
+		return OrderDate;
 	}
-	public void setOrderdate(String orderdate) {
-		this.orderdate = orderdate;
+	public void setOrderDate(String orderDate) {
+		OrderDate = orderDate;
 	}
+
+
+
+
 
 
 

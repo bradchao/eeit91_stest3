@@ -22,7 +22,7 @@ public class OrdersController {
 		List<Orders> list = ordersRepository.findOrdersByCompanyname("Around the Horn");
 		System.out.println(list.size());
 		for (Orders order : list) {
-			System.out.printf("%d : %s : %s\n", order.getOrderID(), order.getOrderdate(), 
+			System.out.printf("%d : %s : %s\n", order.getOrderID(), order.getOrderDate(), 
 					order.getCustomers().getCompanyname());
 		}
 		
