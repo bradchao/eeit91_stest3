@@ -20,7 +20,7 @@ public class Products {
 	@Column(name = "ProductID")
 	private Long productid;
 	
-	@Column(name = "ProductName")
+	//@Column(name = "Productname")
 	private String productname;
 	
 	@OneToMany(mappedBy = "products", cascade = CascadeType.ALL)

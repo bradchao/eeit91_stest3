@@ -11,7 +11,7 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "OrderDetails")
+@Table(name = "orderdetails")
 public class OrderDetails {
 
 	@EmbeddedId
@@ -22,6 +22,10 @@ public class OrderDetails {
 
 	@Column(name = "OrderID")
 	private Long orderId;
+	
+	private Double unitprice;
+	
+	private Integer quantity;
 
 	@ManyToOne
 	@MapsId("orderId")
@@ -71,6 +75,22 @@ public class OrderDetails {
 
 	public void setProducts(Products products) {
 		this.products = products;
+	}
+
+	public Double getUnitprice() {
+		return unitprice;
+	}
+
+	public void setUnitprice(Double unitprice) {
+		this.unitprice = unitprice;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 	
 	

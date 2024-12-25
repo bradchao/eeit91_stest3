@@ -9,6 +9,8 @@ public class OrderProductKey implements Serializable{
 	private Long orderId;
 	private Long productId;
 	
+	public OrderProductKey() {}
+	
 	public OrderProductKey(Long orderId, Long productId) {
 		this.orderId = orderId; this.productId = productId;
 	}

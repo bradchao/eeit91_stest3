@@ -21,10 +21,10 @@ public class OrdersV2 {
 	private Long orderId;
 	
 	@Column(name = "CustomerID")
-	private String customerId;
+	private String customerid;
 	
 	@OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
-	private List<OrderDetails> orderDetails;
+	private List<OrderDetails> orderdetails;
 
 	public Long getOrderId() {
 		return orderId;
@@ -34,21 +34,26 @@ public class OrdersV2 {
 		this.orderId = orderId;
 	}
 
-	public String getCustomerId() {
-		return customerId;
+
+	
+	
+	public String getCustomerid() {
+		return customerid;
 	}
 
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
+	public void setCustomerid(String customerid) {
+		this.customerid = customerid;
 	}
 
-	public List<OrderDetails> getOrderDetails() {
-		return orderDetails;
+	public List<OrderDetails> getOrderdetails() {
+		return orderdetails;
 	}
 
-	public void setOrderDetails(List<OrderDetails> orderDetails) {
-		this.orderDetails = orderDetails;
+	public void setOrderdetails(List<OrderDetails> orderdetails) {
+		this.orderdetails = orderdetails;
 	}
+
+
 	
 	
 	
