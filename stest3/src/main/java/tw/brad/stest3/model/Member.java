@@ -2,10 +2,15 @@ package tw.brad.stest3.model;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Transient;
 
 @Entity
 @Component
@@ -16,7 +21,20 @@ public class Member {
 	private String account;
 	private String passwd;
 	private String realname;
-	private byte[] icon;
+	
+	// @JsonIgnore
+	@Transient
+	private String iconString;
+	
+	public String getIconString() {
+		return iconString;
+	}
+	public void setIconString(String iconString) {
+		this.iconString = iconString;
+	}
+	@Lob
+	@Column(columnDefinition = "BLOB")
+	private byte[] icon = null;
 	
 	public Member() {}
 	public Member(String account, String passwd, String realname) {
